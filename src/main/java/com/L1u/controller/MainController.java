@@ -133,12 +133,12 @@ public class MainController {
     @RequestMapping(value = "/loginAction",method = RequestMethod.POST)
         public String loginAction(@RequestParam("nickname")String nickName,@RequestParam("password")String password,ModelMap modelMap){
             List<UserEntity> userEntityList = userRepository.findByNickname(nickName);
-            int userId = userEntityList.get(0).getId();
+
 //            logger.error("Nickname:"+nickName);
 //            logger.error("Password:"+password);
 //            logger.error("userEntityList.size():"+userEntityList.size());
 //            logger.error("password:"+userEntityList.get(0).getPassword());
-            if(userEntityList.size()>0) {
+            if(userEntityList!=null) {
                 if(userEntityList.get(0).getPassword().equals(password)){
                     modelMap.addAttribute("user",userEntityList.get(0));
                     List<BlogEntity> blogEntityList = blogRepository.findAll();

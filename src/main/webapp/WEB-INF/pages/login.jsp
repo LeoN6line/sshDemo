@@ -89,15 +89,15 @@
                 <li  class="active"><a href="/index2">主页</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我的 <span class="caret"></span></a>
-                    <ul class="dropdown-menu ">
-                        <li><a href="/admin/users/show/${user.id}">资料</a></li>
-                        <li><a href="/admin/blogs">博客</a></li>
-                        <li><a href="#">收藏博客</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">推送</li>
-                        <li role="presentation" ><a href="#">消息        <span class="badge">3</span></a></li>
-                        <li role="presentation" ><a href="#">感兴趣的        <span class="badge">3</span></a></li>
-                    </ul>
+
+                        <ul class="dropdown-menu ">
+                            <li class="dropdown-header">未登录？</li>
+                            <li><a href="/login">已有账号，去登陆 &raquo;</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">还没有账号？</li>
+                            <li><a href="/admin/users/add">去注册一个吧~</a></li>
+                        </ul>
+
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">关于 <span class="caret"></span></a>
@@ -114,6 +114,7 @@
     </div>
 </nav>
 <h1 style= "margin-top:100px;" align="center">向CSDN致敬——技术连接你我</h1>
+
 <div class="container" align="center" style="margin-top: 80px;background-color: #f5f5f5;height: auto;">
     <h1> 登 录 </h1>
     <h3><span class = "label label-default form-signin-heading" >技术博客系统</span></h3>

@@ -71,26 +71,37 @@
                 <li  class="active"><a href="/index2">主页</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我的 <span class="caret"></span></a>
+                    <c:if test="${!empty user}">
+                        <ul class="dropdown-menu ">
+                            <li><a href="/admin/users/show/${user.id}">资料</a></li>
+                            <li><a href="/admin/blogs">博客</a></li>
+                            <li><a href="#">收藏博客</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">推送</li>
+                            <li role="presentation" ><a href="#">消息        <span class="badge">3</span></a></li>
+                            <li role="presentation" ><a href="#">感兴趣的        <span class="badge">3</span></a></li>
+                        </ul>
+                    </c:if>
+                    <c:if test="${empty user}">
+                        <ul class="dropdown-menu ">
+                            <li class="dropdown-header">未登录？</li>
+                            <li><a href="/login">已有账号，去登陆 &raquo;</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">还没有账号？</li>
+                            <li><a href="/admin/users/add">去注册一个吧~</a></li>
+                        </ul>
+                    </c:if>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">关于 <span class="caret"></span></a>
                     <ul class="dropdown-menu ">
-                        <li><a href="/admin/users/show/${user.id}">资料</a></li>
-                        <li><a href="/admin/blogs">博客</a></li>
-                        <li><a href="#">收藏博客</a></li>
+                        <li><a href="#">设置</a></li>
+                        <li><a href="#">帮助与反馈</a></li>
                         <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">推送</li>
-                        <li role="presentation" ><a href="#">消息        <span class="badge">3</span></a></li>
-                        <li role="presentation" ><a href="#">感兴趣的        <span class="badge">3</span></a></li>
+                        <li class="dropdown-header">新版本</li>
+                        <li role="presentation" ><a href="#">新功能        <span class="badge">NEW!</span></a></li>
                     </ul>
                 </li>
-               <li class="dropdown">
-                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">关于 <span class="caret"></span></a>
-                   <ul class="dropdown-menu ">
-                       <li><a href="#">设置</a></li>
-                       <li><a href="#">帮助与反馈</a></li>
-                       <li role="separator" class="divider"></li>
-                       <li class="dropdown-header">新版本</li>
-                       <li role="presentation" ><a href="#">新功能        <span class="badge">NEW!</span></a></li>
-                   </ul>
-               </li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -106,8 +117,8 @@
         <c:if test="${!empty user}">
             <h1>你好，${user.nickname}</h1>
             <p>欢迎登陆技术博客系统，点击了解更多来熟悉该系统吧！ </p>
-            <p><a class="btn btn-primary btn-lg" href="/moreInfo" role="button">了解更多 &raquo;</a></p>
-            <p><a class="btn btn-danger btn-lg " onclick="" role="button">登出，再会！</a></p>
+            <p><a class="btn btn-primary btn-lg" href="/moreInfo" role="button">了解更多 &raquo;</a><a class="btn btn-danger btn-lg " onclick="" role="button" style="margin-left: 20px;">登出，再会！</a></p>
+
         </c:if>
 
     </div>
@@ -220,7 +231,7 @@
 
 
     </div>
-    <hr>
+
 <div>
     <footer>
         <p>&copy; 2018 Company, Inc.</p>

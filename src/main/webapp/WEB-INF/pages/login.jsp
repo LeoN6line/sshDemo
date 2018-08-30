@@ -115,7 +115,13 @@
 </nav>
 <h1 style= "margin-top:100px;" align="center">向CSDN致敬——技术连接你我</h1>
 
-<div class="container" align="center" style="margin-top: 80px;background-color: #f5f5f5;height: auto;">
+<c:if test="${!empty message}">
+<div class="alert alert-warning" role="alert">
+    <span class="glyphicon glyphicon-info-sign" aria-hidden="true" >${message}</span></a>
+</div>
+</c:if>
+<div class="container">
+<div  align="center" style="margin-top: 80px;background-color: #f5f5f5;height: auto;">
     <h1> 登 录 </h1>
     <h3><span class = "label label-default form-signin-heading" >技术博客系统</span></h3>
     <form class="form-signin" id="form1" action="/loginAction" method="post">
@@ -132,7 +138,13 @@
         <a href="/admin/users/add" class="text-info" style="margin-top: 5px">还没有账户，快去注册一个吧~</a>
 
     </form>
-
+</div>
+    <hr>
+    <div>
+        <footer>
+            <p>&copy; 2018 Company, Inc.</p>
+        </footer>
+    </div>
 </div> <!-- /container -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

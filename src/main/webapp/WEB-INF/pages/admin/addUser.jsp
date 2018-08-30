@@ -94,9 +94,15 @@
 
         <div class="form-group">
             <button type="submit" class="btn btn-lg btn-success" style="width: 400px;margin-top: 10px">提交</button>
-            <p><a href="/login" class="text-info" style="margin-top: 5px">已经有账号了，我要登陆~</a>git</p>
+            <p><a href="/login" class="text-info" style="margin-top: 5px">已经有账号了，我要登陆~</a></p>
         </div>
     </form:form>
+    </div>
+<hr>
+    <div>
+        <footer>
+            <p>&copy; 2018 Company, Inc.</p>
+        </footer>
     </div>
 </div>
 

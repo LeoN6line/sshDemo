@@ -17,6 +17,11 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import javax.servlet.http.HttpSession;
+
+import javax.servlet.http.HttpServletRequest;
+
+
 @Controller
 public class MainController {
     private static Logger logger = Logger.getLogger(MainController.class);
@@ -105,9 +110,19 @@ public class MainController {
         userRepository.flush();
         return "redirect:/admin/users";
     }
+
+    /**
+     *
+     * 免登陆入口
+     *
+     * */
     @RequestMapping(value = "/login2",method = RequestMethod.GET)
-    public String login2(ModelMap modelMap){
+    public String login2(ModelMap modelMap,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(1000*60*60);
         UserEntity userEntity = userRepository.findOne(2);
+        session.setAttribute("user",userEntity);
+        logger.error("------------------session中数据："+session.getAttribute("user"));
         List<BlogEntity> blogEntityList = blogRepository.findAll();
         Map<Integer,String> desc = new HashMap<Integer, String>(); //200字描述
         for(BlogEntity blog:blogEntityList){
@@ -131,25 +146,33 @@ public class MainController {
         return "login";
     }
     @RequestMapping(value = "/loginAction",method = RequestMethod.POST)
-        public String loginAction(@RequestParam("nickname")String nickName,@RequestParam("password")String password,ModelMap modelMap){
-            List<UserEntity> userEntityList = userRepository.findByNickname(nickName);
+        public String loginAction(@RequestParam("nickname")String nickName,@RequestParam("password")String password,ModelMap modelMap,HttpServletRequest request) {
+        List<UserEntity> userEntityList = userRepository.findByNickname(nickName);
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(1000 * 60 * 60);
+//        System.out.println("session.getAttribute:"+session.getAttribute("user"));
+        if (session.getAttribute("user") == null||session.getAttribute("user").equals("")) {
+            session.setAttribute("user", userEntityList.get(0));
 
 //            logger.error("Nickname:"+nickName);
 //            logger.error("Password:"+password);
-//            logger.error("userEntityList.size():"+userEntityList.size());
+            logger.error("userEntityList.size():" + userEntityList.size());
+            logger.error("userEntityList:" + userEntityList);
 //            logger.error("password:"+userEntityList.get(0).getPassword());
-            if(userEntityList!=null) {
-                if(userEntityList.get(0).getPassword().equals(password)){
-                    modelMap.addAttribute("user",userEntityList.get(0));
+
+            if (userEntityList.size() != 0) {
+                if (userEntityList.get(0).getPassword().equals(password)) {
+                    modelMap.addAttribute("user", userEntityList.get(0));
                     List<BlogEntity> blogEntityList = blogRepository.findAll();
-                    Map<Integer,String> desc = new HashMap<Integer, String>(); //200字描述
-                    logger.error("blogEntityList.size:"+blogEntityList.size());
-                    if(blogEntityList.size()>0) {
-                        for(BlogEntity blog:blogEntityList){
-                            if (blog.getContent().length()>200){
-                                desc.put(blog.getId(),blog.getContent().substring(0,203)+"...");
-                            }else{
-                                desc.put(blog.getId(),blog.getContent());
+                    Map<Integer, String> desc = new HashMap<Integer, String>(); //200字描述
+
+                    logger.error("blogEntityList.size:" + blogEntityList.size());
+                    if (blogEntityList.size() > 0) {
+                        for (BlogEntity blog : blogEntityList) {
+                            if (blog.getContent().length() > 200) {
+                                desc.put(blog.getId(), blog.getContent().substring(0, 203) + "...");
+                            } else {
+                                desc.put(blog.getId(), blog.getContent());
                             }
                         }
 
@@ -157,13 +180,27 @@ public class MainController {
                         modelMap.addAttribute("blogs1", map.get("blogs1"));
                         modelMap.addAttribute("blogs2", map.get("blogs2"));
                         modelMap.addAttribute("blogs3", map.get("blogs3"));
-                        modelMap.addAttribute("desc",desc);
+                        modelMap.addAttribute("desc", desc);
                     }
-                    return "index2";}
-                    return "redirect:/login";
-            }else{
-                return "redirect:/login";}
+                    return "index2";
+                }
+               String message = "密码错误，请重新输入！";
+                modelMap.addAttribute("message", message);
+                return "redirect:/login";
+            } else {
+                String message = "未找到用户，请检查昵称和密码！";
+                modelMap.addAttribute("message",message);
+                return "redirect:/login";
+            }
+
+
+        }else{
+            String message = "已经有用户登陆，请先登出用户之后再登陆！";
+            modelMap.addAttribute("message",message);
+            return "redirect:/login";
         }
+
+    }
 
 
         private Map<String,List<BlogEntity>> toThree(List<BlogEntity> blogEntityList){
@@ -185,6 +222,20 @@ public class MainController {
             map.put("blogs2",blogs2);
             map.put("blogs3",blogs3);
     return map;
+
+    }
+    /**
+     * 登出系统，清楚session
+     */
+    @RequestMapping(value="/logout",method = RequestMethod.GET)
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(1000*60*60);
+        if(session.getAttribute("user") !=null){
+            session.removeAttribute("user");
+
+        }
+        return "/login";
 
     }
     }

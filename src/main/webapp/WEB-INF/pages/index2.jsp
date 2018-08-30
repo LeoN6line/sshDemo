@@ -71,9 +71,9 @@
                 <li  class="active"><a href="/index2">主页</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我的 <span class="caret"></span></a>
-                    <c:if test="${!empty user}">
+                    <c:if test="${!empty sessionScope.user}">
                         <ul class="dropdown-menu ">
-                            <li><a href="/admin/users/show/${user.id}">资料</a></li>
+                            <li><a href="/admin/users/show/${sessionScope.user.id}">资料</a></li>
                             <li><a href="/admin/blogs">博客</a></li>
                             <li><a href="#">收藏博客</a></li>
                             <li role="separator" class="divider"></li>
@@ -82,7 +82,7 @@
                             <li role="presentation" ><a href="#">感兴趣的        <span class="badge">3</span></a></li>
                         </ul>
                     </c:if>
-                    <c:if test="${empty user}">
+                    <c:if test="${empty sessionScope.user}">
                         <ul class="dropdown-menu ">
                             <li class="dropdown-header">未登录？</li>
                             <li><a href="/login">已有账号，去登陆 &raquo;</a></li>
@@ -109,15 +109,15 @@
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
     <div class="container">
-        <c:if test="${empty user}">
+        <c:if test="${empty sessionScope.user}">
         <h1>你好，参访者！</h1>
             <p>欢迎来到技术博客系统，在这里你能学习到更多的知识，充实自己，提升自己！ </p>
             <p><a class="btn btn-primary btn-lg" href="/login" role="button">去登陆 &raquo;</a></p>
         </c:if>
-        <c:if test="${!empty user}">
-            <h1>你好，${user.nickname}</h1>
+        <c:if test="${!empty sessionScope.user}">
+            <h1>你好，${sessionScope.user.nickname}</h1>
             <p>欢迎登陆技术博客系统，点击了解更多来熟悉该系统吧！ </p>
-            <p><a class="btn btn-primary btn-lg" href="/moreInfo" role="button">了解更多 &raquo;</a><a class="btn btn-danger btn-lg " onclick="" role="button" style="margin-left: 20px;">登出，再会！</a></p>
+            <p><a class="btn btn-primary btn-lg" href="/moreInfo" role="button">了解更多 &raquo;</a><a class="btn btn-danger btn-lg " onclick="" role="button" style="margin-left: 20px;" href="/logout">登出，再会！</a></p>
 
         </c:if>
 
@@ -132,7 +132,7 @@
 
     <div class="page-header">
     <h2>精选博客</h2>
-        <c:if test="${empty user}">
+        <c:if test="${empty sessionScope.user}">
         <div class="alert alert-warning" role="alert">
         <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>没有用户登陆，请先登录。</a>
         </div>
@@ -163,17 +163,20 @@
 
                     <div class="panel panel-default ">
                     <div class="panel-heading">
-                    <h3 class="panel-title">${blog1.title}  <a class="badge">By:${blog1.userByUserId.nickname}</a></h3>
+                        <h3 class="panel-title">${blog1.title}  <a class="badge">By:${blog1.userByUserId.nickname}<img src="../img/visit.png" style="width: 20px;height: 20px;margin-left: 10px;" >:220</a>
+                        </h3>
                     </div>
                     <div class="panel-body " style="height: auto">
                     <p style="text-indent:2em;"> ${desc.get(blog1.id)}</p>
                     </div>
-                    <div class="panel-footer ">
-                    <a href="/admin/blogs/show/${blog1.id}" type="button" class="btn btn-sm btn-success col-xs-3">详情</a>
-                    <a href="/admin/blogs/update/${blog1.id}" type="button" class="btn btn-sm btn-warning col-xs-3 ">标记</a>
-                    <a href="/admin/blogs/delete/${blog1.id}" type="button" class="btn btn-sm btn-danger col-xs-offset-3">不感兴趣</a>
+                        <div class="panel-footer ">
+                            <div class="row"  >
 
-                    </div>
+                                <a href="/admin/blogs/show/${blog1.id}" type="button" class="btn btn-sm btn-success col-xs-3" style="width: 80px ;margin-left: 50px">详情</a>
+                                <a href="/admin/blogs/update/${blog1.id}" type="button" class="btn btn-sm btn-warning col-xs-3 " style="width: 80px;margin-left: 10px">标记</a>
+                                <a href="/admin/blogs/delete/${blog1.id}" type="button" class="btn btn-sm btn-danger col-xs-3" style="width: 80px;margin-left: 10px">不感兴趣</a>
+                            </div>
+                        </div>
                     </div>
 
                     </c:forEach>
@@ -183,16 +186,19 @@
 
                             <div class="panel panel-default ">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">${blog2.title}  <a class="badge">By:${blog2.userByUserId.nickname}</a></h3>
+                                    <h3 class="panel-title">${blog2.title}  <a class="badge">By:${blog2.userByUserId.nickname}<img src="../img/visit.png" style="width: 20px;height: 20px;margin-left: 10px;" ></a>
+                                </h3>
                                 </div>
                                 <div class="panel-body " style="height: auto">
                                     <p style="text-indent:2em;"> ${desc.get(blog2.id)}</p>
                                 </div>
                                 <div class="panel-footer ">
-                                    <a href="/admin/blogs/show/${blog2.id}" type="button" class="btn btn-sm btn-success col-xs-3">详情</a>
-                                    <a href="/admin/blogs/update/${blog2.id}" type="button" class="btn btn-sm btn-warning col-xs-3 ">标记</a>
-                                    <a href="/admin/blogs/delete/${blog2.id}" type="button" class="btn btn-sm btn-danger col-xs-offset-3">不感兴趣</a>
+                                <div class="row"  >
 
+                                    <a href="/admin/blogs/show/${blog2.id}" type="button" class="btn btn-sm btn-success col-xs-3" style="width: 80px ;margin-left: 50px">详情</a>
+                                    <a href="/admin/blogs/update/${blog2.id}" type="button" class="btn btn-sm btn-warning col-xs-3 " style="width: 80px;margin-left: 10px">标记</a>
+                                    <a href="/admin/blogs/delete/${blog2.id}" type="button" class="btn btn-sm btn-danger col-xs-3" style="width: 80px;margin-left: 10px">不感兴趣</a>
+                                </div>
                                 </div>
 
                             </div>
@@ -206,17 +212,20 @@
 
                             <div class="panel panel-default ">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">${blog3.title}  <a class="badge">By:${blog3.userByUserId.nickname}</a></h3>
+                                    <h3 class="panel-title">${blog3.title}  <a class="badge">By:${blog3.userByUserId.nickname}<img src="../img/visit.png" style="width: 20px;height: 20px;margin-left: 10px;" >:110</a>
+                                    </h3>
                                 </div>
                                 <div class="panel-body " style="height: auto">
                                     <p style="text-indent:2em;"> ${desc.get(blog3.id)}</p>
                                 </div>
                                 <div class="panel-footer ">
-                                    <a href="/admin/blogs/show/${blog3.id}" type="button" class="btn btn-sm btn-success col-xs-3">详情</a>
-                                    <a href="/admin/blogs/update/${blog3.id}" type="button" class="btn btn-sm btn-warning col-xs-3 ">标记</a>
-                                    <a href="/admin/blogs/delete/${blog3.id}" type="button" class="btn btn-sm btn-danger col-xs-offset-3">不感兴趣</a>
+                                    <div class="row"  >
 
-                                </div>
+                                        <a href="/admin/blogs/show/${blog3.id}" type="button" class="btn btn-sm btn-success col-xs-3" style="width: 80px ;margin-left: 50px">详情</a>
+                                        <a href="/admin/blogs/update/${blog3.id}" type="button" class="btn btn-sm btn-warning col-xs-3 " style="width: 80px;margin-left: 10px">标记</a>
+                                        <a href="/admin/blogs/delete/${blog3.id}" type="button" class="btn btn-sm btn-danger col-xs-3" style="width: 80px;margin-left: 10px">不感兴趣</a>
+                                    </div>
+                            </div>
                             </div>
 
                     </c:forEach>

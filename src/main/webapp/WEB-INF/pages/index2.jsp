@@ -163,7 +163,7 @@
 
                     <div class="panel panel-default ">
                     <div class="panel-heading">
-                        <h3 class="panel-title">${blog1.title}  <a class="badge">By:${blog1.userByUserId.nickname}<img src="../img/visit.png" style="width: 20px;height: 20px;margin-left: 10px;" >:220</a>
+                        <h3 class="panel-title">${blog1.title}  <a class="badge" style="background-color: #000000">By:${blog1.userByUserId.nickname}<img src="../img/visit.png" style="width: 20px;height: 20px;margin-left: 10px;" >220</a>
                         </h3>
                     </div>
                     <div class="panel-body " style="height: auto">
@@ -186,7 +186,7 @@
 
                             <div class="panel panel-default ">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">${blog2.title}  <a class="badge">By:${blog2.userByUserId.nickname}<img src="../img/visit.png" style="width: 20px;height: 20px;margin-left: 10px;" ></a>
+                                    <h3 class="panel-title">${blog2.title}  <a class="badge" style="background-color: #000000">By:${blog2.userByUserId.nickname}<img src="../img/visit.png" style="width: 20px;height: 20px;margin-left: 10px;" ></a>
                                 </h3>
                                 </div>
                                 <div class="panel-body " style="height: auto">
@@ -212,7 +212,7 @@
 
                             <div class="panel panel-default ">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">${blog3.title}  <a class="badge">By:${blog3.userByUserId.nickname}<img src="../img/visit.png" style="width: 20px;height: 20px;margin-left: 10px;" >:110</a>
+                                    <h3 class="panel-title">${blog3.title}  <a class="badge" style="background-color: #000000">By:${blog3.userByUserId.nickname}<img src="../img/visit.png" style="width: 20px;height: 20px;margin-left: 10px;" >110</a>
                                     </h3>
                                 </div>
                                 <div class="panel-body " style="height: auto">

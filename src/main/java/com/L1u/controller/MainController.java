@@ -151,8 +151,10 @@ public class MainController {
         HttpSession session = request.getSession();
         session.setMaxInactiveInterval(1000 * 60 * 60);
 //        System.out.println("session.getAttribute:"+session.getAttribute("user"));
+        System.out.println("userEntityList.size():"+userEntityList.size());
         if (session.getAttribute("user") == null||session.getAttribute("user").equals("")) {
-            session.setAttribute("user", userEntityList.get(0));
+
+
 
 //            logger.error("Nickname:"+nickName);
 //            logger.error("Password:"+password);
@@ -162,6 +164,7 @@ public class MainController {
 
             if (userEntityList.size() != 0) {
                 if (userEntityList.get(0).getPassword().equals(password)) {
+                    session.setAttribute("user", userEntityList.get(0));
                     modelMap.addAttribute("user", userEntityList.get(0));
                     List<BlogEntity> blogEntityList = blogRepository.findAll();
                     Map<Integer, String> desc = new HashMap<Integer, String>(); //200字描述

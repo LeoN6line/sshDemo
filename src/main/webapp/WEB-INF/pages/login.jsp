@@ -147,7 +147,7 @@
     </div>
 </div> <!-- /container -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../bootstrap-3.3.7/assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="../bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

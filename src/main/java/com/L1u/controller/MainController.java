@@ -5,6 +5,7 @@ import com.L1u.model.BlogEntity;
 import com.L1u.model.UserEntity;
 import com.L1u.repository.BlogRepository;
 import com.L1u.repository.UserRepository;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -241,6 +242,16 @@ public class MainController {
         return "/login";
 
     }
+    /**
+     *
+     * 详情页跳转*/
+    @RequestMapping(value = "/moreInfo" ,method = RequestMethod.GET)
+    public String getMore(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(1000*60*60);
+        return "moreInfo";
+    }
+
     }
 
 

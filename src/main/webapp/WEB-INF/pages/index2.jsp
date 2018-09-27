@@ -18,7 +18,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../bootstrap-3.3.7/docs/favicon.ico">
 
-    <title>Jumbotron Template for bootstrap-3.3.7</title>
+    <title>技术博客系统</title>
 
     <!-- bootstrap-3.3.7 core CSS -->
     <link href="../bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -116,7 +116,7 @@
         </c:if>
         <c:if test="${!empty sessionScope.user}">
             <h1>你好，${sessionScope.user.nickname}</h1>
-            <p>欢迎登陆技术博客系统，点击了解更多来熟悉该系统吧！ </p>
+            <p>欢迎登陆技术博客系统，点击<label >了解更多</label>来熟悉该系统吧！ </p>
             <p><a class="btn btn-primary btn-lg" href="/moreInfo" role="button">了解更多 &raquo;</a><a class="btn btn-danger btn-lg " onclick="" role="button" style="margin-left: 20px;" href="/logout">登出，再会！</a></p>
 
         </c:if>
@@ -245,8 +245,8 @@
     <footer>
         <p>&copy; 2018 Company, Inc.</p>
     </footer>
-</div> <!-- /container -->
 </div>
+</div> <!-- /container -->
 
 <!-- bootstrap-3.3.7 core JavaScript
 ================================================== -->
@@ -256,6 +256,8 @@
 <script src="../bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../bootstrap-3.3.7/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+
 </body>
 </html>
 

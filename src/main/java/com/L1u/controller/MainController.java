@@ -5,7 +5,7 @@ import com.L1u.model.BlogEntity;
 import com.L1u.model.UserEntity;
 import com.L1u.repository.BlogRepository;
 import com.L1u.repository.UserRepository;
-import org.hibernate.Session;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -147,29 +147,28 @@ public class MainController {
         return "login";
     }
     @RequestMapping(value = "/loginAction",method = RequestMethod.POST)
-        public String loginAction(@RequestParam("nickname")String nickName,@RequestParam("password")String password,ModelMap modelMap,HttpServletRequest request) {
-        List<UserEntity> userEntityList = userRepository.findByNickname(nickName);
+        public String loginAction(@RequestParam("username")String username,@RequestParam("password")String password,ModelMap modelMap,HttpServletRequest request) {
+        logger.info("调用了loginAction！！！！！！！！！！！！！！！！！！！！");
+        List<UserEntity> userEntityList = userRepository.findByNickname(username);
         HttpSession session = request.getSession();
         session.setMaxInactiveInterval(1000 * 60 * 60);
-//        System.out.println("session.getAttribute:"+session.getAttribute("user"));
-        System.out.println("userEntityList.size():"+userEntityList.size());
+        JSONObject message = new JSONObject();
         if (session.getAttribute("user") == null||session.getAttribute("user").equals("")) {
-
-
-
-//            logger.error("Nickname:"+nickName);
-//            logger.error("Password:"+password);
             logger.error("userEntityList.size():" + userEntityList.size());
             logger.error("userEntityList:" + userEntityList);
-//            logger.error("password:"+userEntityList.get(0).getPassword());
+            logger.error("password:"+userEntityList.get(0).getPassword());
 
             if (userEntityList.size() != 0) {
                 if (userEntityList.get(0).getPassword().equals(password)) {
+                    //登陆成功之后,将状态记录json中，传回前端
+                    message.put("code",200);
+                    message.put("info","登陆成功");
+                    modelMap.addAttribute("message",message.toString());
+                    //存入session
                     session.setAttribute("user", userEntityList.get(0));
-                    modelMap.addAttribute("user", userEntityList.get(0));
+                    //主页精彩博客推荐内容获取
                     List<BlogEntity> blogEntityList = blogRepository.findAll();
                     Map<Integer, String> desc = new HashMap<Integer, String>(); //200字描述
-
                     logger.error("blogEntityList.size:" + blogEntityList.size());
                     if (blogEntityList.size() > 0) {
                         for (BlogEntity blog : blogEntityList) {
@@ -188,20 +187,23 @@ public class MainController {
                     }
                     return "index2";
                 }
-               String message = "密码错误，请重新输入！";
-                modelMap.addAttribute("message", message);
-                return "redirect:/login";
+                message.put("code",500);
+                message.put("info","密码错误，请重新输入！");
+                modelMap.addAttribute("message",message.toString());
+                return "/login";
             } else {
-                String message = "未找到用户，请检查昵称和密码！";
-                modelMap.addAttribute("message",message);
-                return "redirect:/login";
+                message.put("code",404);
+                message.put("info","未找到用户，请检查昵称和密码！");
+                modelMap.addAttribute("message",message.toString());
+                return "/login";
             }
 
 
         }else{
-            String message = "已经有用户登陆，请先登出用户之后再登陆！";
-            modelMap.addAttribute("message",message);
-            return "redirect:/login";
+            message.put("code",400);
+            message.put("info","已经有用户登陆，请先登出用户之后再登陆！");
+            modelMap.addAttribute("message",message.toString());
+            return "/login";
         }
 
     }
@@ -229,7 +231,7 @@ public class MainController {
 
     }
     /**
-     * 登出系统，清楚session
+     * 登出系统，清除session
      */
     @RequestMapping(value="/logout",method = RequestMethod.GET)
     public String logout(HttpServletRequest request){

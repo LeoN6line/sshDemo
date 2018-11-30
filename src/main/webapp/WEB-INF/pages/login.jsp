@@ -45,32 +45,27 @@
         $('.dropdown-toggle').dropdown();
 
     });
-    function loginin() {
-        document.getElementById("form1").submit();
-    }
+    // function loginin() {
+    //     document.getElementById("form1").submit();
+    // }
 
     //异步调用js实现
-    // $(function(){
-    //     var $btn=$(".btn");
-    //     var username=$("#inputName").val();
-    //     var password=$("#inputPassword").val();
-    //     $btn.on(
-    //         "click",function(){
-    //             $.ajax({
-    //                 url:"/loginAction",
-    //                 data:username+password,
-    //                 dataType:"json",
-    //                 type:"post",
-    //                 success:function(){
-    //                     if(data==Fail){
-    //                         alert("登陆失败！请重新输入")
-    //                     }else{
-    //                         alert("登陆成功！")
-    //                     }
-    //                 }
-    //             })
-    //         })
-    // })
+  function loginin(){
+        var username=$("#inputName").val();
+        var password=$("#inputPassword").val();
+                $.ajax({
+                    url:"/loginAction",
+                    data:{"username":username,"password":password},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        alert("11111")
+                        if(data.code != 200)
+                            alert(data.message);
+                    }
+                })
+
+    }
 </script>
 <!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -115,16 +110,16 @@
 </nav>
 <h1 style= "margin-top:100px;" align="center">向CSDN致敬——技术连接你我</h1>
 
-<c:if test="${!empty message}">
-<div class="alert alert-warning" role="alert">
-    <span class="glyphicon glyphicon-info-sign" aria-hidden="true" >${message}</span></a>
-</div>
-</c:if>
+<%--<c:if test="${!empty message}">--%>
+<%--<div class="alert alert-warning" role="alert">--%>
+    <%--<span class="glyphicon glyphicon-info-sign" aria-hidden="true" >${message}</span></a>--%>
+<%--</div>--%>
+<%--</c:if>--%>
 <div class="container">
 <div  align="center" style="margin-top: 80px;background-color: #f5f5f5;height: auto;">
     <h1> 登 录 </h1>
     <h3><span class = "label label-default form-signin-heading" >技术博客系统</span></h3>
-    <form class="form-signin" id="form1" action="/loginAction" method="post">
+    <form class="form-signin" id="form1">
         <label for="nickname" class="sr-only">Nick Name</label>
         <input type="text" id="nickname" class="form-control text-center " placeholder="Nickname"  name="nickname" style="width: 400px;"required autofocus>
         <label for="password" class="sr-only">Password</label>
@@ -134,7 +129,7 @@
                 <input type="checkbox" value="remember-me"> 记住账号
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block " style="width: 400px;" type="submit" onclick="loginin();">登 入</button>
+        <button class="btn btn-lg btn-primary btn-block " style="width: 400px;"  onclick="loginin();">登 入</button>
         <a href="/admin/users/add" class="text-info" style="margin-top: 5px">还没有账户，快去注册一个吧~</a>
 
     </form>
